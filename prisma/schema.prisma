@@ -1,0 +1,52 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://doan2_owner:p1aU0njYFxRZ@ep-shy-bread-a1uim8gk-pooler.ap-southeast-1.aws.neon.tech/doan2?sslmode=require"
+}
+
+model khoahoc {
+  id String @id @default(uuid())
+  title String 
+}
+
+model User {
+  id       String   @id @default(uuid())
+  userId   String
+  hoanthanhchuong String[] @default(["0", "0", "0", "0", "0", "0"])
+  hoanthanhkhoa Float @default(0)
+}
+
+model Chapter {
+  id        String   @id @default(uuid())
+  tenchuong String   @default("")
+  sumbaitap Int 
+  createdAt DateTime @default(now())
+  baitaps   Baitap[] // Thêm dòng này để thiết lập mối quan hệ một-nhiều với Baitap
+  code   code[]
+}
+
+model Baitap {
+  id         String   @id @default(uuid())
+  chapterId  String   // Thêm trường khóa ngoại để lưu trữ id của Chapter
+  chapter    Chapter  @relation(fields: [chapterId], references: [id]) // Định nghĩa mối quan hệ với Chapter
+  debai String
+  codemau String
+  code code[]
+}
+
+model code{
+  id         String   @id @default(uuid()) 
+  chapterId  String  // Thêm trường khóa ngoại để lưu trữ id của Chapter
+  chapter    Chapter  @relation(fields: [chapterId],references: [id]) 
+  baiId String
+  baitap    Baitap  @relation(fields: [baiId],references: [id])
+
+  codeuser String @default("")
+  gemini String @default("")
+  checkcode String @default("") 
+  loicode String @default("")  
+}
