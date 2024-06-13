@@ -17,7 +17,7 @@ const teacherRoutes = [
   {
     icon: List,
     label: "Chỉnh sửa khóa học",
-    href: "/teacher/courses",
+    href: "/teacher/course",
   },
 ]
 

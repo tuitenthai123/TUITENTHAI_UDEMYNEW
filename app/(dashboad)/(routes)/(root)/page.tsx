@@ -20,7 +20,7 @@ export default async function Dashboard() {
 <>
     <div className="p-6 space-y-4">
       <div className="grid grid-cols-4 sm:grid-cols-4 gap-4">
-      <Link href={"/courses/laptrinhcanban/chapter1"}>
+      <Link href={"/courses/laptrinhcanban/b3f6ab24-b880-41b8-ae54-e2aaafe118ce"}>
       <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image

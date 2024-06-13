@@ -77,7 +77,13 @@ export const columns: ColumnDef<Chapter>[] = [
             <Link href={`/teacher/course/${conmeo[3]}/edit/${id}`}>
               <DropdownMenuItem>
                 <Pencil className="h-4 w-4 mr-2" />
-                Edit
+                Chỉnh sửa bài tập
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/teacher/course/${conmeo[3]}/edit/chapter/${id}`}>
+              <DropdownMenuItem>
+                <Pencil className="h-4 w-4 mr-2" />
+                Chỉnh sửa thông tin chương
               </DropdownMenuItem>
             </Link>
           </DropdownMenuContent>

@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef, useEffect} from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { Bolt,FilePenLine,Eraser} from 'lucide-react';
@@ -32,13 +32,13 @@ interface Ibaitap {
 
 
 export const Editbaitap = (BaiTap: Ibaitap) => {
-  const debai = useRef("")
   
   enum Dialogs {
     dialog1 = 'dialog1',
     dialog2 = 'dialog2',
   }
-
+  
+  const debai = useRef("")
   const [sourceCode, setSourceCode] = useState("");
   const [dialog, setDialog] = useState()
   let idbaitap = BaiTap.idbaitap
@@ -61,6 +61,11 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
   )
   }
 
+  useEffect(() => {
+    setSourceCode(BaiTap.viducode)
+  }, [])
+  
+
   const handlexoa = async () => {
     const response = await axios.post(`/api/edit/xoabaitap`,{
       idbaitap,
@@ -75,7 +80,7 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
   return (
     <Dialog>
     <div className='flex flex-col gap-3 p-2'>
-        <div className='bg-gray-200 rounded-lg p-2  flex flex-col gap-2'>
+        <div className='bg-sky-100  rounded-lg p-2  flex flex-col gap-2'>
             <div className='flex justify-between p-2'>
               <span>{BaiTap.debai}</span>
               <DropdownMenu>
@@ -158,11 +163,8 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
       <div>
         <DialogHeader>
           <DialogTitle className='flex justify-center'>Chỉnh sửa bài tập</DialogTitle>
-          <DialogDescription className='flex justify-center'>
-              Bạn có chắc xóa hay không
-          </DialogDescription>
         </DialogHeader>
-        <div> nếu như xóa các dữ liệu về bài tập sẽ không thể khôi phục</div>
+        <div className='p-5 flex justify-center'> các dữ liệu bị xóa không thể khôi phục</div>
         <DialogFooter className='flex justify-center'>
           <Button variant={"destructive"} onClick={handlexoa}>Xóa bài tập</Button>
         </DialogFooter>
@@ -170,8 +172,6 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
     }   
     </DialogContent>  
   </Dialog>
-
-  
   )
 }
 

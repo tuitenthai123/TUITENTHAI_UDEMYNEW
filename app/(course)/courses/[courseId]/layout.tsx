@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
 import React from "react";
 import Link from "next/link";
+import { db } from "@/lib/db";
 
 const CourseLayout = async ({
   children,
@@ -18,20 +19,8 @@ const CourseLayout = async ({
   if (!userId) {
     return redirect("/")
   }
-
-  const chuong = [
-    {title: "Chương 1: Tổng quan về ngôn ngữ C++",route:"chapter1"},
-    {title: "Chương 2: Các cấu trúc điều khiển",route:"chapter2"},
-    {title: "Chương 3: Dữ liệu kiểu mảng",route:"chapter3"},
-    {title: "Chương 4: Dữ liệu kiểu chuỗi",route:"chapter4"},
-    {title: "Chương 5: Con trỏ và hàm",route:"chapter5"},
-    {title: "Chương 6: Dữ liệu kiểu cấu trúc",route:"chapter6"},
-    {title: "Chương 7: Dữ liệu kiểu tập tin",route:"chapter7"},
-  ]
-
-  
-
-
+  const chuong = await db.chapter.findMany({})
+  //console.log(chuong)
 
   return (
     <div className="h-full">
@@ -50,10 +39,11 @@ const CourseLayout = async ({
         <div className="flex flex-col w-full">
       {chuong.map((chapter)=>(
         <Link
-            href={`/courses/laptrinhcanban/${chapter.route}`}
+            href={`/courses/laptrinhcanban/${chapter.id}`}
             className={cn(
               "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20"
             )}
+            key={chapter.id}
         >
           <div className="flex items-center gap-x-2 py-4">
             <CheckCircle
@@ -62,7 +52,7 @@ const CourseLayout = async ({
                 "text-slate-500", "text-slate-700",
               )}
             />
-              {chapter.title}
+              {chapter.tenchuong}
           </div>
         </Link>
       ))}
