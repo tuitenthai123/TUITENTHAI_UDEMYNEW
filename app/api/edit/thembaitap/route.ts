@@ -6,15 +6,32 @@ export async function POST(request: Request) {
   const Inputdebai = res?.inputdebai
   const Codemau = res?.sourceCode
 
-  const resbaitap = chapterID
-    ? await db.baitap.createMany({
+  const reschuong = await db.chapter.findMany({
+    where:{
+      id:chapterID
+    }
+  })
+
+  const soluongbaitap = reschuong[0].sumbaitap
+
+  const soluongbaitapnew = soluongbaitap +1
+
+  const reschuongnew = await db.chapter.updateMany({
+    where:{
+      id:chapterID
+    },
+    data:{
+      sumbaitap:soluongbaitapnew
+    }
+  })
+
+  const resbaitap = await db.baitap.createMany({
       data:{
         chapterId:chapterID,
         debai:Inputdebai,
         codemau:Codemau
       } 
     })
-    : [] 
 
-  return Response.json({ resbaitap })
+  return Response.json({ reschuong })
 }

@@ -60,7 +60,6 @@ const page = () => {
       },
       {headers: {"Content-Type": "application/json",},},
     );
-    
     toast.success('tạo bài tập thành công', {
       position: "top-center",
       autoClose: 5000,
@@ -91,6 +90,7 @@ const page = () => {
                 idbaitap={item.id} 
                 viducode={item?.codemau} 
                 key={item.id}
+                idchuong={chapterid}
               />
             ))
         }

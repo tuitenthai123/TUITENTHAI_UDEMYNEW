@@ -3,6 +3,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { Bolt,FilePenLine,Eraser} from 'lucide-react';
 import Editor from "@monaco-editor/react";
+import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
 import {
   DropdownMenu,
@@ -27,7 +28,8 @@ import { Label } from "@/components/ui/label"
 interface Ibaitap {
     debai:String,
     viducode:String,
-    idbaitap:String
+    idbaitap:String,
+    idchuong:String
 };
 
 
@@ -59,6 +61,16 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
       },
     },
   )
+  toast.success('chỉnh sửa thành công', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    theme: "colored",
+    });
   }
 
   useEffect(() => {
@@ -67,18 +79,30 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
   
 
   const handlexoa = async () => {
+    const idChuong = BaiTap.idchuong
     const response = await axios.post(`/api/edit/xoabaitap`,{
       idbaitap,
+      idChuong
     },{
       headers: {
         "Content-Type": "application/json",
       },
     },
   )
-  console.log(response)
+  toast.success('xóa thành công', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    theme: "colored",
+    });
   }
   return (
     <Dialog>
+      <ToastContainer/>
     <div className='flex flex-col gap-3 p-2'>
         <div className='bg-sky-100  rounded-lg p-2  flex flex-col gap-2'>
             <div className='flex justify-between p-2'>

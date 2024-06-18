@@ -45,25 +45,25 @@ async function main() {
   // console.log('Created chapters:', chapter1, chapter2);
 
   // Tạo bài tập
-  const baitap1 = await prisma.baitap.create({
-    data: {
-      chapterId: "b3f6ab24-b880-41b8-ae54-e2aaafe118ce",
-      debai: '1. tính diện tích hình vuông n*n với n được nhập từ bàn phím',
-      codemau: '//Code mẫu 1',
-    },
-  });
+  // const baitap1 = await prisma.baitap.create({
+  //   data: {
+  //     chapterId: "b3f6ab24-b880-41b8-ae54-e2aaafe118ce",
+  //     debai: '1. tính diện tích hình vuông n*n với n được nhập từ bàn phím',
+  //     codemau: '//Code mẫu 1',
+  //   },
+  // });
 
-  const baitap2 = await prisma.baitap.create({
-    data: {
-      chapterId: "b3f6ab24-b880-41b8-ae54-e2aaafe118ce",
-      debai: '2. tính tổng, hiệu, tích, thương của hai số thực bất kỳ được nhập từ bàn phím',
-      codemau: '//Code mẫu 2',
-    },
-  });
+  // const baitap2 = await prisma.baitap.create({
+  //   data: {
+  //     chapterId: "b3f6ab24-b880-41b8-ae54-e2aaafe118ce",
+  //     debai: '2. tính tổng, hiệu, tích, thương của hai số thực bất kỳ được nhập từ bàn phím',
+  //     codemau: '//Code mẫu 2',
+  //   },
+  // });
 
-  console.log('Created baitaps:', baitap1, baitap2);
+  // console.log('Created baitaps:', baitap1, baitap2);
 
-  // // Tạo mã
+  // // // Tạo mã
   // const code1 = await prisma.code.create({
   //   data: {
   //     chapterId: chapter1.id,
@@ -77,12 +77,16 @@ async function main() {
 
   // const code2 = await prisma.code.create({
   //   data: {
-  //     chapterId: chapter2.id,
-  //     baiId: baitap2.id,
+  //     chapterId: "e2029146-ac8c-4565-9566-9c2d3ebb9416",
+  //     baiId: "1261a6a6-eeb2-4081-a8a4-b82a8e28934b",
   //     codeuser: 'Code user 2',
   //     gemini: 'Gemini 2',
   //     checkcode: 'saithuattoan',
-  //     loicode: ""
+  //   },
+  // });
+  //   const tongbai = await prisma.tongkhoahoc.create({
+  //   data: {
+  //     tongbaitap:0
   //   },
   // });
 

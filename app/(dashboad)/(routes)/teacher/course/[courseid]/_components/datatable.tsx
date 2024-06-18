@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -51,9 +52,10 @@ export function DataTable<TData, TValue>({
     },
   })
 
+
   return (
     <div>
-      <div className="flex items-center py-6 justify-between">
+      <div className="flex items-center py-6 gap-5 justify-between">
         <Input
           placeholder="tìm tên chương..."
           value={(table.getColumn("tenchuong")?.getFilterValue() as string) ?? ""}
@@ -62,6 +64,10 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm p-6"
         />
+        <Link href={"/teacher/createchapter"}>
+          <Button >Tạo chương mới</Button>
+        </Link>
+        
       </div>
       <div className="rounded-md border">
         <Table>

@@ -19,7 +19,26 @@ const CourseLayout = async ({
   if (!userId) {
     return redirect("/")
   }
-  const chuong = await db.chapter.findMany({})
+  const chuong = await db.chapter.findMany({
+    orderBy: {
+      tenchuong: "asc"
+    }
+  })
+
+  const conmeo = await db.user.upsert({
+    where:{
+      id:userId
+    },
+    create:{
+      id:userId,
+      userId:userId,
+      hoanthanhchuong:["0", "0", "0", "0", "0", "0"],
+      hoanthanhkhoa:0
+    },
+    update:{
+      id:userId
+    }
+  })
   //console.log(chuong)
 
   return (

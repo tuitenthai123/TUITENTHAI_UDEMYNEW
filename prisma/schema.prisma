@@ -9,44 +9,45 @@ datasource db {
 }
 
 model khoahoc {
-  id String @id @default(uuid())
-  title String 
+  id    String @id @default(uuid())
+  title String
 }
 
 model User {
-  id       String   @id @default(uuid())
-  userId   String
+  id              String   @id @default(uuid())
+  userId          String
   hoanthanhchuong String[] @default(["0", "0", "0", "0", "0", "0"])
-  hoanthanhkhoa Float @default(0)
+  hoanthanhkhoa   Float    @default(0)
 }
 
 model Chapter {
   id        String   @id @default(uuid())
   tenchuong String   @default("")
-  sumbaitap Int 
+  sumbaitap Int
   createdAt DateTime @default(now())
-  baitaps   Baitap[] // Thêm dòng này để thiết lập mối quan hệ một-nhiều với Baitap
-  code   code[]
+  lythuyet  String   @default("nội dung trống")
+  baitaps   Baitap[]
 }
 
 model Baitap {
-  id         String   @id @default(uuid())
-  chapterId  String   // Thêm trường khóa ngoại để lưu trữ id của Chapter
-  chapter    Chapter  @relation(fields: [chapterId], references: [id]) // Định nghĩa mối quan hệ với Chapter
-  debai String
-  codemau String
-  code code[]
+  id        String  @id @default(uuid())
+  chapterId String
+  debai     String
+  codemau   String
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
 }
 
-model code{
-  id         String   @id @default(uuid()) 
-  chapterId  String  // Thêm trường khóa ngoại để lưu trữ id của Chapter
-  chapter    Chapter  @relation(fields: [chapterId],references: [id]) 
-  baiId String
-  baitap    Baitap  @relation(fields: [baiId],references: [id])
+model code {
+  id        String  @id @default(uuid())
+  userId  String
+  chapterId String
+  baiId     String
+  codeuser  String  @default("")
+  gemini    String  @default("")
+  checkcode String  @default("")
+}
 
-  codeuser String @default("")
-  gemini String @default("")
-  checkcode String @default("") 
-  loicode String @default("")  
+model tongkhoahoc{
+  id String @id @default(uuid())
+  tongbaitap Int? @default(0)
 }
