@@ -13,7 +13,8 @@ export async function POST(request: Request) {
         where: {
             id:res?.IDbaitap,
             baiId:res?.IDbaitap,
-            chapterId:res?.IDchuong
+            chapterId:res?.IDchuong,
+            userId:userId
         }
     })
   return Response.json({ rescode })
