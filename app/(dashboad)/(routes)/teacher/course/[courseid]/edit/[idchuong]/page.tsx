@@ -128,7 +128,6 @@ const page = () => {
           </DialogFooter>
         </div>
       </DialogContent>
-
     </Dialog>
     
   )

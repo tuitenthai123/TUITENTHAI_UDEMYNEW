@@ -12,6 +12,21 @@ export async function POST(request: Request) {
       },
     })
     : []
+
+  let tongkhoahoc = await db.tongkhoahoc.findMany({})
+
+  let tongbaitaptoankhoa = tongkhoahoc[0].tongbaitap 
+  if(tongbaitaptoankhoa == null)
+    {
+      tongbaitaptoankhoa = 0;
+    }
+  let tongbaitaptoankhoanew = tongbaitaptoankhoa-1
+  
+  await db.tongkhoahoc.updateMany({
+    data:{
+      tongbaitap:tongbaitaptoankhoanew
+    }
+  })
   
   const soluongbaitap = await db.chapter.findMany({
     where:{

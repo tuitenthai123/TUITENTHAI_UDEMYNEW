@@ -125,7 +125,7 @@ export const Baitap =  (BaiTap: Ibaitap) => {
           Checkcodehehe = "loicuphap"
         }else{
           setloicode(false)
-          let checkcode = "ngôn ngữ c++ cơ bản không sử dụng các thư viện trừ các thư viện như cmath chỉ sử dụng code thuần và các kiểu dữ liệu nguyên thủy với đề bài: "+BaiTap.debai+". In ra màn hình các giá trị này với code như sau /n"
+          let checkcode = "ngôn ngữ c++ cơ bản không sử dụng các thư viện ngoại trừ các thư viện như cmath chỉ sử dụng code thuần và các kiểu dữ liệu nguyên thủy với đề bài: "+BaiTap.debai+". In ra màn hình các giá trị này với code như sau /n"
           checkcode = checkcode.concat(sourceCode)
           checkcode = checkcode.concat("\n")
           checkcode = checkcode.concat("kiểm tra code mà tôi cung cấp đúng như đề bài yêu cầu và đánh giá thuật toán tối ưu hay chưa nếu code tôi cung cấp có sai thì chỉ rõ dòng nào cũng như comment trong code và chỉ trả lời là code tôi cung cấp đúng hay sai ở dạng json trả về 3 key 1 là correct với value tương ứng true hoặc false 2 là comment với value đánh giá 3 là code đã được tối ưu hoặc đã sửa lỗi ở key thứ 3 là code thì làm đàng hoàn trả về đúng kết quả, kết quả trả về các dấu ngoặc kép thay thế làm sao cho chuỗi json làm sao có thể sử dụng JSON.parse để lấy được dữ liệu")
@@ -205,14 +205,14 @@ export const Baitap =  (BaiTap: Ibaitap) => {
                   <div className='flex'>
                     <Editor
                       theme={ "vs-dark"}
-                      height="250px"
+                      height="auto"
                       width="663px"
                       defaultLanguage={"c++"}
                       defaultValue={sourceCode}
                       language={"c++"}
                       onChange={handleOnchange}
                     />
-                  <div className='p-3'>
+                  <div className='p-3 w-1/2'>
                     <span className='items-center font-bold'>Output</span>
                       <div className='flex flex-col gap-5'>
                         <div className='font-bold'>lỗi và gợi ý</div>

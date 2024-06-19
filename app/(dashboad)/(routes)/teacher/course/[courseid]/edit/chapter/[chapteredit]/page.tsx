@@ -3,11 +3,10 @@ import React, { useEffect, useState,useRef } from 'react'
 import "froala-editor/css/froala_style.min.css";
 import "froala-editor/css/froala_editor.pkgd.min.css";
 import FroalaEditorComponent from "react-froala-wysiwyg";
-
+import 'react-toastify/dist/ReactToastify.css';
 import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 import "froala-editor/js/plugins.pkgd.min.js";
 import axios from 'axios'
-
 import { PencilLine } from 'lucide-react';
 import { ToastContainer,toast } from 'react-toastify';
 import {

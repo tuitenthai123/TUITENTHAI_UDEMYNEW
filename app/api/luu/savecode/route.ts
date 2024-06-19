@@ -30,22 +30,40 @@ export async function POST(request: Request) {
     }
   }
   )
-  // const tongsobaitap = await db.tongkhoahoc.findMany({
-  //   where:{
-  //     id:"680b3e96-cfb1-4fcf-a530-6dd50ea59822"
-  //   }
-  // })
+ 
+
 
   // const socaulamduocnew = socaulamduoc[0].hoanthanhkhoa
 
-  // if(res?.checkcodehehe === "dung"){
-  //   let sobaitap = await db.chapter.findMany({
-  //     where:{
-  //       id:res?.idchuong
-  //     }
-  //   })
-  //   let tiendohoanthanh = sobaitap[0].sumbaitap 
-  // }
+  if(res?.Checkcodehehe === "dung"){
+    const tongsocau = await db.tongkhoahoc.findMany({
+      where:{
+        id:"680b3e96-cfb1-4fcf-a530-6dd50ea59822"
+      }
+    })
+  
+    const socaullamdung = await db.code.count({
+      where:{
+        checkcode:"dung"
+      }
+    })
+  
+    let tongbaitap = 1
+    if (tongsocau.length > 0 && tongsocau[0].hasOwnProperty('tongbaitap')) {
+      tongbaitap = tongsocau[0].tongbaitap || 1;
+    }
+  
+    let tiendohoc = (socaullamdung * 100) / tongbaitap
 
-  return Response.json({ updatecodeuser })
+    const capnhattiendohoc = await db.user.updateMany({
+      where:{
+        id:userId
+      },
+      data:{
+        hoanthanhkhoa:tiendohoc
+      }
+    })
+  }
+
+  return Response.json({updatecodeuser  })
 }

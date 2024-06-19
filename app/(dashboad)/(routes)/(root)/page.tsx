@@ -3,18 +3,22 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { BookOpen } from "lucide-react";
 import Link from "next/link";
+import { db } from '@/lib/db';
 
 import { CourseProgress } from "@/components/course-progress";
 import { IconBadge } from "@/components/icon-badge";
 
 export default async function Dashboard() {
   const { userId } = auth();
-  console.log(userId)
-
-  console.log(userId)
   if (!userId) {
     return redirect("/");
   }
+
+  const tiengdo = await db.user.findMany({
+    where:{
+      userId:userId
+    }
+  })
 
   return (
 <>
@@ -48,8 +52,9 @@ export default async function Dashboard() {
           <CourseProgress
               variant={"default"}
               size="sm"
-              value={50}
+              value={tiengdo[0].hoanthanhkhoa}
             />
+          
         </div>
       </div>
     </Link>

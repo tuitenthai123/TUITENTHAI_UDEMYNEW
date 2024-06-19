@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import {
@@ -40,13 +42,23 @@ const CreatePage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("/api/tao/taochuong", values);
-      console.log(response)
+      toast.success('tạo chương thành công', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+        });
     } catch {
     }
   }
 
   return ( 
     <div className=" mx-auto flex md:items-center md:justify-center h-full p-6">
+      <ToastContainer/>
       <div>
         <h1 className="text-2xl">
           Tên chương
