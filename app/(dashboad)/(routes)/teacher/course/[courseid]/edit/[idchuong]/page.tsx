@@ -18,6 +18,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 const page = () => {
   const debai = useRef("")
@@ -25,6 +33,7 @@ const page = () => {
   const [reload, setreload] = useState(true)
   const [chapterid, setchapterid] = useState("")
   const [sourceCode, setSourceCode] = useState("")
+  const [tenchuong, settenchuong] = useState([])
   useEffect(() => {
     const fetchdata = async () =>{
       const currentPath = window.location.pathname
@@ -38,7 +47,15 @@ const page = () => {
           {ChapterID},
           {headers: {"Content-Type": "application/json",},},
         );
+      const idchuong = ChapterID
+      const reschuong = await axios.post(
+        "http://localhost:3000/api/edit/timchuong",
+        {idchuong},
+        {headers: {"Content-Type": "application/json",},},
+      );
+        console.log(reschuong)
         //console.log(res)
+        settenchuong(reschuong?.data?.reschuong)
         setbaitap(res?.data?.resbaitap)
     }   
     fetchdata()
@@ -77,11 +94,34 @@ const page = () => {
     <Dialog>
       <ToastContainer/>
       <div>
-        <div className='flex justify-end gap-2 p-2'>
-          <Button variant={"ghost"} className='flex  p-2 cursor-pointer' onClick={()=>setreload(!reload)}><RefreshCcw/></Button>
-          <DialogTrigger className='bg-black p-2 rounded-lg text-white'>Thêm bài tập</DialogTrigger>
+        <div className='flex justify-between'>
+          <div className='p-2'>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/teacher/course">Khóa học</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/teacher/course/680b3e96-cfb1-4fcf-a530-6dd50ea59822">Chương</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{tenchuong[0]?.tenchuong}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          <div className='flex justify-end gap-2 p-2'>
+            <Button variant={"ghost"} className='flex  p-2 cursor-pointer' onClick={()=>setreload(!reload)}><RefreshCcw/></Button>
+            <DialogTrigger className='bg-black p-2 rounded-lg text-white'>Thêm bài tập</DialogTrigger>
+          </div>
         </div>
-        <div></div>
+        
         { baitap.length === 0 
           ? <span className='flex items-center justify-center min-h-screen text-lg'>Chương hiện tại trống!</span> 
           :baitap.map(item => (

@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 import "froala-editor/js/plugins.pkgd.min.js";
 import axios from 'axios'
-import { PencilLine } from 'lucide-react';
+import { PencilLine,Trash2 } from 'lucide-react';
 import { ToastContainer,toast } from 'react-toastify';
 import {
   Dialog,
@@ -18,116 +18,175 @@ import {
   DialogTrigger,
   DialogFooter
 } from "@/components/ui/dialog"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 
 const page = () => {
-    const [chuong, setchuong] = useState("")
-    const [editlythuyet, seteditlythuyet] = useState(false)
-    const [model, setModel] = useState("");
-    const [reload, setreload] = useState(false)
-    const tenchuong = useRef("")
+  enum Dialogs {
+    dialog1 = 'dialog1',
+    dialog2 = 'dialog2',
+  }
 
-    const handleModelChange = (event) => {
-      setModel(event);
-      console.log(event)
-    };
-    let config = {
-      
-      charCounterCount: false,
-      key: "AVB8B-21B4C3A2E1D2D1A17vC2ve1xhbH1qb1vC2wgheC3I3C7C8C4B4B3A3B2G2==",
-      events: {
-        contentChanged: function () {
-          console.log("Test Events");
-        }
+  const [dialog, setDialog] = useState()
+  const [chuong, setchuong] = useState("")
+  const [editlythuyet, seteditlythuyet] = useState(false)
+  const [model, setModel] = useState("");
+  const [reload, setreload] = useState(false)
+  const tenchuong = useRef("")
+
+  const handleModelChange = (event) => {
+    setModel(event);
+  };
+  let config = {
+    charCounterCount: false,
+    key: "AVB8B-21B4C3A2E1D2D1A17vC2ve1xhbH1qb1vC2wgheC3I3C7C8C4B4B3A3B2G2==",
+    events: {
+      contentChanged: function () {
+        console.log("Test Events");
       }
-    };
-    
-    const handlesavelythuyet = async () => {
-      const currentPath = window.location.pathname
-      const pathfix = currentPath.split("/")
-      const idchuong = pathfix[6]
-      const res = await axios.post(
-          "http://localhost:3000/api/edit/chinhsualythuyet",
-          {
-           idchuong,
-           model
-          },
-          {headers: {"Content-Type": "application/json",},},
-        );
-      console.log(res)
-      setreload(!reload)
-      toast.success('cập nhật thành công', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-        });
     }
+  };
+  
+  const handlesavelythuyet = async () => {
+    const currentPath = window.location.pathname
+    const pathfix = currentPath.split("/")
+    const idchuong = pathfix[6]
+    const res = await axios.post(
+        "http://localhost:3000/api/edit/chinhsualythuyet",
+        {
+          idchuong,
+          model
+        },
+        {headers: {"Content-Type": "application/json",},},
+      );
+    setreload(!reload)
+    toast.success('cập nhật thành công', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+      });
+  }
 
-    const handletenchuong = async () => {
-      const currentPath = window.location.pathname
-      const pathfix = currentPath.split("/")
-      const idchuong = pathfix[6]
-      const edittenchuong = tenchuong.current.value
-      const res = await axios.post(
-          "http://localhost:3000/api/edit/chinhsuachuong",
-          {
-            edittenchuong,
-            idchuong,
-          },
-          {headers: {"Content-Type": "application/json",},},
-        );
-      console.log(res)
-      setreload(!reload)
-      toast.success('thay đổi thành công', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-        });
-    }
+  const handletenchuong = async () => {
+    const currentPath = window.location.pathname
+    const pathfix = currentPath.split("/")
+    const idchuong = pathfix[6]
+    const edittenchuong = tenchuong.current.value
+    const res = await axios.post(
+        "http://localhost:3000/api/edit/chinhsuachuong",
+        {
+          edittenchuong,
+          idchuong,
+        },
+        {headers: {"Content-Type": "application/json",},},
+      );
+    setreload(!reload)
+    toast.success('thay đổi thành công', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+      });
+  }
 
-    useEffect(() =>{
-        const fetchdata = async() => {
-            const currentPath = window.location.pathname
-            const pathfix = currentPath.split("/")
-            const idchuong = pathfix[6]
-            const res = await axios.post(
-                "http://localhost:3000/api/edit/timchuong",
-                {
-                 idchuong 
-                },
-                {headers: {"Content-Type": "application/json",},},
-              );
-            console.log(res)
-            setModel(res?.data?.reschuong[0]?.lythuyet)
-            console.log(res?.data?.reschuong[0]?.lythuyet)
-            setchuong(res?.data?.reschuong[0])
-        }
-        fetchdata()
-    },[reload])
+  const handlexoachuong = async () => {
+    const currentPath = window.location.pathname
+    const pathfix = currentPath.split("/")
+    const idchuong = pathfix[6]
+    const res = await axios.post(
+        "http://localhost:3000/api/edit/xoachuong",
+        {
+          idchuong,
+        },
+        {headers: {"Content-Type": "application/json",},},
+      );
+    toast.success('xóa chương thành công thành công', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+      });
+      location.href="/teacher/course/680b3e96-cfb1-4fcf-a530-6dd50ea59822"
+  }
+
+  useEffect(() =>{
+      const fetchdata = async() => {
+          const currentPath = window.location.pathname
+          const pathfix = currentPath.split("/")
+          const idchuong = pathfix[6]
+          const res = await axios.post(
+              "http://localhost:3000/api/edit/timchuong",
+              {
+                idchuong 
+              },
+              {headers: {"Content-Type": "application/json",},},
+            );
+          console.log(res)
+          setModel(res?.data?.reschuong[0]?.lythuyet)
+          console.log(res?.data?.reschuong[0]?.lythuyet)
+          setchuong(res?.data?.reschuong[0])
+      }
+      fetchdata()
+  },[reload])
     
   return (
     <Dialog>
       <ToastContainer/>
     <div className='p-3'>
-      <h1 className='text-2xl font-bold mb-5'>Tổng quan</h1>
+      <div className=' mb-5'>
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/teacher/course">Khóa học</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/teacher/course/680b3e96-cfb1-4fcf-a530-6dd50ea59822">Chương</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Chỉnh sửa chương</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+      </div>
+      <div className='flex justify-between'>
+        <h1 className='text-2xl font-bold mb-5'>Tổng quan</h1>
+          <DialogTrigger asChild onClick={()=>{setDialog(Dialogs.dialog2)}}><Button>Xóa chương</Button></DialogTrigger>
+
+      </div>
       <div className='flex justify-between bg-sky-100 rounded-lg p-3'>
         <div className='flex flex-col w-full h-auto bg-white rounded-lg p-2'>
           <div>
             <span className='text-2xl font-bold flex gap-2'>{chuong?.tenchuong}
-              <DialogTrigger><PencilLine className='cursor-pointer w-4 h-4 mt-2'/></DialogTrigger></span>
+              <DialogTrigger asChild onClick={()=>{setDialog(Dialogs.dialog1)}}><PencilLine className='cursor-pointer w-4 h-4 mt-2'/></DialogTrigger></span>
           </div>
           <span className='opacity-60'>tổng số bài tập: {chuong?.sumbaitap}</span>
         </div>
@@ -175,29 +234,41 @@ const page = () => {
       </div>
     }
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Chỉnh sửa chương</DialogTitle>
-          <DialogDescription>
-            Chỉnh sửa thông tin cơ bản của chương
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Tên chương
-            </Label>
-            <Input
-              defaultValue={chuong?.tenchuong}
-              ref={tenchuong}
-              className="col-span-3"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button onClick={handletenchuong}>Lưu</Button>
-        </DialogFooter>
+        {dialog === Dialogs.dialog1?         
+        <div>
+            <DialogHeader>
+              <DialogTitle>Chỉnh sửa chương</DialogTitle>
+              <DialogDescription>
+                Chỉnh sửa thông tin cơ bản của chương
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="username" className="text-right">
+                  Tên chương
+                </Label>
+                <Input
+                  defaultValue={chuong?.tenchuong}
+                  ref={tenchuong}
+                  className="col-span-3"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button onClick={handletenchuong}>Lưu</Button>
+            </DialogFooter>
+        </div>:        
+        <div>
+            <DialogHeader>
+              <DialogTitle className='flex justify-center'>Xóa chương</DialogTitle>
+            </DialogHeader>
+            <div className='p-5 flex justify-center'>Khi xóa chương không thể khôi phục lại được</div>
+            <DialogFooter>
+              <Button onClick={handlexoachuong} variant={"destructive"}>Xóa chương</Button>
+            </DialogFooter>
+        </div>}
       </DialogContent>
-    </div>
+      </div>
     </Dialog>
   )
 }

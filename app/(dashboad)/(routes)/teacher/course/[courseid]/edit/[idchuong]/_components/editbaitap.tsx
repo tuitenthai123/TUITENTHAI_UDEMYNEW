@@ -186,7 +186,7 @@ export const Editbaitap = (BaiTap: Ibaitap) => {
       : 
       <div>
         <DialogHeader>
-          <DialogTitle className='flex justify-center'>Chỉnh sửa bài tập</DialogTitle>
+          <DialogTitle className='flex justify-center'>Xóa bài tập</DialogTitle>
         </DialogHeader>
         <div className='p-5 flex justify-center'> các dữ liệu bị xóa không thể khôi phục</div>
         <DialogFooter className='flex justify-center'>

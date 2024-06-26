@@ -91,6 +91,12 @@ async function main() {
   // });
 
   // console.log('Created codes:', code1, code2);
+
+  const xoabai = await prisma.Chapter.delete({
+    where:{
+      id:"d7bfa012-9576-4545-abb3-2846055a7ecf"
+    }
+  })
 }
 
 main()

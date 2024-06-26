@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { NavbarRoutes } from "@/components/navbar-routes";
 import { cn } from "@/lib/utils";
-import { CheckCircle } from "lucide-react";
+import { BookText  } from "lucide-react";
 import React from "react";
 import Link from "next/link";
 import { db } from "@/lib/db";
@@ -65,7 +65,7 @@ const CourseLayout = async ({
             key={chapter.id}
         >
           <div className="flex items-center gap-x-2 py-4">
-            <CheckCircle
+            <BookText
               size={22}
               className={cn(
                 "text-slate-500", "text-slate-700",

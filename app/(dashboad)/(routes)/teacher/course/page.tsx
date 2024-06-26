@@ -6,6 +6,16 @@ import { db } from "@/lib/db";
 import { DataTable } from "./_components/datatable";
 import { columns } from "./_components/columns";
 
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+
 const CoursesPage = async () => {
   const { userId } = auth();
 
@@ -16,8 +26,24 @@ const CoursesPage = async () => {
   const courses = await db.khoahoc.findMany();
 
   return ( 
-    <div className="p-6">
-      <DataTable columns={columns} data={courses} />
+    <div >
+      <div className='p-3 ml-3'>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Khóa học</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      <div className="p-6 -mt-6">
+        <DataTable columns={columns} data={courses} />
+      </div>
+     
     </div>
    );
 }

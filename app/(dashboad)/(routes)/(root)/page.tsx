@@ -31,7 +31,7 @@ export default async function Dashboard() {
             fill
             className="object-cover"
             alt="khoa hoc c++" 
-            src={"/anhtest.jpg"}
+            src={"/ngon-ngu-c-.jpg"}
           />
         </div>
         <div className="flex flex-col pt-2">
